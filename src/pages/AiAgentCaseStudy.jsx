@@ -441,7 +441,7 @@ export default function AiAgentCaseStudy() {
         className={`
           pointer-events-none
           fixed
-          bottom-[88px]
+          bottom-[100px]
           right-4
           z-50
           transition-all
