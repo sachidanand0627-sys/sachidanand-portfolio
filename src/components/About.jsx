@@ -115,7 +115,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/after-effects.svg"
+                      src="/assets/logos/after-effects.svg"
                       alt="Adobe After Effects"
                     />
                   ),
@@ -125,7 +125,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/adobe-xd.svg"
+                      src="/assets/logos/adobe-xd.svg"
                       alt="Adobe XD"
                     />
                   ),
@@ -135,7 +135,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/ai-studio.svg"
+                      src="/assets/logos/ai-studio.svg"
                       alt="AI Studio"
                     />
                   ),
@@ -145,7 +145,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/canva.svg"
+                      src="/assets/logos/canva.svg"
                       alt="Canva"
                     />
                   ),
@@ -155,7 +155,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/claude.svg"
+                      src="/assets/logos/claude.svg"
                       alt="Claude AI"
                     />
                   ),
@@ -165,7 +165,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/figma.svg"
+                      src="/assets/logos/figma.svg"
                       alt="Figma"
                     />
                   ),
@@ -175,7 +175,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/framer.svg"
+                      src="/assets/logos/framer.svg"
                       alt="Framer"
                     />
                   ),
@@ -185,7 +185,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/github.svg"
+                      src="/assets/logos/github.svg"
                       alt="GitHub"
                     />
                   ),
@@ -195,7 +195,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/lottiefiles.svg"
+                      src="/assets/logos/lottiefiles.svg"
                       alt="LottieFiles"
                     />
                   ),
@@ -205,7 +205,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/lovable.svg"
+                      src="/assets/logos/lovable.svg"
                       alt="Lovable"
                     />
                   ),
@@ -215,7 +215,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/miro.svg"
+                      src="/assets/logos/miro.svg"
                       alt="Miro"
                     />
                   ),
@@ -225,7 +225,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/vscode.svg"
+                      src="/assets/logos/vscode.svg"
                       alt="VS Code"
                     />
                   ),
@@ -235,7 +235,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/tools/webflow.svg"
+                      src="/assets/logos/webflow.svg"
                       alt="Webflow"
                     />
                   ),
@@ -250,7 +250,7 @@ export default function About() {
               hoverSpeed={0}
               fadeOut
               fadeOutColor="#EEF3F2"
-              ariaLabel="Tools and companies"
+              ariaLabel="logos and companies"
             />
           </div>
         </div>
