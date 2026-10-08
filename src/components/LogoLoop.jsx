@@ -97,7 +97,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     }
 
     if (prefersReduced) {
-      track.style.transform = isVertical ? 'translate3d(0, 0, 0)' : 'translate3d(0, 0, 0)';
+      track.style.transform = 'translate3d(0, 0, 0)';
       return () => {
         lastTimestampRef.current = null;
       };
@@ -276,6 +276,9 @@ export const LogoLoop = memo(
           <span
             className={cx(
               'inline-flex items-center',
+              // FIX: size any <img> / <svg> passed via `node` using the logoHeight prop
+              '[&_img]:block [&_img]:h-[var(--logoloop-logoHeight)] [&_img]:w-auto [&_img]:max-w-none [&_img]:object-contain',
+              '[&_svg]:block [&_svg]:h-[var(--logoloop-logoHeight)] [&_svg]:w-auto [&_svg]:max-w-none',
               'motion-reduce:transition-none',
               scaleOnHover &&
                 'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
@@ -287,7 +290,7 @@ export const LogoLoop = memo(
         ) : (
           <img
             className={cx(
-              'h-[var(--logoloop-logoHeight)] w-auto block object-contain',
+              'h-[var(--logoloop-logoHeight)] w-auto max-w-none block object-contain',
               '[-webkit-user-drag:none] pointer-events-none',
               '[image-rendering:-webkit-optimize-contrast]',
               'motion-reduce:transition-none',
