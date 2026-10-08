@@ -6,12 +6,12 @@ export default function About() {
     <section
       id="about"
       data-cursor-theme="light"
-      className="relative w-full py-[clamp(88px,10vw,150px)] max-[800px]:py-[82px] bg-[#EEF3F2]"
+      className="relative w-full overflow-x-clip py-[clamp(88px,10vw,150px)] max-[800px]:py-[82px] bg-[#EEF3F2]"
     >
       <div className="w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)] mx-auto grid grid-cols-[minmax(220px,0.8fr)_minmax(0,1.4fr)] max-[800px]:grid-cols-1 gap-[clamp(36px,7vw,100px)] items-center">
 
         {/* About Image */}
-        <div className="relative w-full aspect-[5/5] max-h-[520px] flex items-end justify-center overflow-visible">
+        <div className="relative w-full aspect-[5/5] max-h-[520px] flex items-end justify-center overflow-x-clip overflow-y-visible">
           <div className="absolute bottom-[20%] left-[8%] w-[84%] h-[78%] rounded-[28px] border border-[#2CAEDF]/100" />
 
           <img

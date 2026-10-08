@@ -383,9 +383,15 @@ export default function DocumentUploadCaseStudy() {
       {/* FLOATING PROTOTYPE CTA */}
       <div
         className={`
-          pointer-events-none fixed bottom-6 right-6 z-40
-          transition-all duration-300
-          sm:bottom-7 sm:right-7
+          pointer-events-none
+          fixed
+          bottom-[88px]
+          right-4
+          z-50
+          transition-all
+          duration-300
+          sm:bottom-7
+          sm:right-7
           ${
             showFloatingCta
               ? 'translate-y-0 opacity-100'
