@@ -8,123 +8,87 @@ import CaseStudyShell, {
 } from './CaseStudyShell';
 
 const qs = [
-  {
-    number: '01',
-    question: 'Where does the user get stuck?',
-    answer:
-      'The biggest friction appeared when users had to understand what action to take next during the loan application.',
-  },
-  {
-    number: '02',
-    question: 'What happens when users need help?',
-    answer:
-      'Support was mostly verbal, which meant users still had to translate the guidance into actions on the screen.',
-  },
-  {
-    number: '03',
-    question: 'Can the guidance stay contextual?',
-    answer:
-      'The assistant needed to appear close to the task instead of taking users away from the application flow.',
-  },
-  {
-    number: '04',
-    question: 'How much control should the user have?',
-    answer:
-      'Users should be able to decide when the assistant is listening and when it should stay quiet.',
-  },
-  {
-    number: '05',
-    question: 'What should the first version include?',
-    answer:
-      'The first version needed to focus on contextual voice guidance without trying to solve every support scenario at once.',
-  },
-  {
-    number: '06',
-    question: 'How can this scale later?',
-    answer:
-      'The experience could later expand into chat, regional languages and more contextual assistance across the application journey.',
-  },
+  ['01', 'How should users start talking to the assistant?'],
+  ['02', 'Can the assistant stay available while users fill the form?'],
+  ['03', 'How will users know when it is listening?'],
+  ['04', "What if a user doesn't respond?"],
+  ['05', 'Should users be able to switch to typing?'],
+  ['06', 'What should happen when users want to leave?'],
 ];
 
 const decisions = [
-  {
-    number: '01',
-    title: 'Keep the assistant close to the task',
-    text:
-      'Instead of creating a separate support experience, the assistant sits on the right edge so help remains available without taking users away from the application.',
-  },
-  {
-    number: '02',
-    title: 'Use a floating interaction',
-    text:
-      'A floating assistant keeps the experience lightweight and allows the user to continue interacting with the loan application underneath it.',
-  },
-  {
-    number: '03',
-    title: 'Continuous listening',
-    text:
-      'A tap-and-hold interaction was explored, but continuous listening was chosen because the development constraints made repeated interaction less practical.',
-  },
-  {
-    number: '04',
-    title: 'Give users a mute control',
-    text:
-      'Because the assistant continuously listens, mute and unmute controls make the interaction feel more predictable and give users control over the experience.',
-  },
-  {
-    number: '05',
-    title: 'Start with a focused rollout',
-    text:
-      'The first phase was considered for around 20% of users, with English and Hindi as the initial languages.',
-  },
-  {
-    number: '06',
-    title: 'Design for future expansion',
-    text:
-      'Chat and regional language support were considered as future directions rather than adding them to the first version.',
-  },
+  [
+    '01',
+    'Keep the assistant in context',
+    'A floating, draggable entry point keeps support near the application and lets users position it around the content they need.',
+  ],
+  [
+    '02',
+    'Make voice state visible',
+    'Listening and muted states are represented directly in the assistant controls, helping users understand when voice input is active.',
+  ],
+  [
+    '03',
+    'Support more than one mode',
+    'Voice remains the primary interaction, with a chat option available as an alternative way to ask a question.',
+  ],
+  [
+    '04',
+    'Give users control to exit',
+    'An end-conversation confirmation separates leaving the assistant from continuing to use it.',
+  ],
+  [
+    '05',
+    'Design within implementation constraints',
+    'Continuous listening with manual mute/unmute was used instead of a press-and-hold interaction due to development constraints.',
+  ],
+  [
+    '06',
+    'Start with a focused rollout',
+    'The initial scope considered a 20% user rollout in English and Hindi, with chat and regional-language support planned for later phases.',
+  ],
 ];
 
 const screens = [
   [
     'frame 8.svg',
-    'Floating assistant entry',
-    'The assistant remains visible at the edge of the application without interrupting the current loan application task.',
+    'Assistant entry point',
+    'The application remains the primary surface. The assistant is available as a small floating entry point rather than a separate step in the loan journey.',
   ],
   [
     'frame 9.svg',
-    'Get Started discovery',
-    'After a short delay, the Get Started action appears below the assistant so users can discover how to begin.',
+    'Prepare for voice',
+    'A volume prompt appears before continuing, asking the user to raise their device volume so the assistant can be heard clearly.',
   ],
   [
     'frame 10.svg',
-    'Connecting state',
-    'A short connecting state communicates that the assistant is preparing before starting the conversation.',
+    'Compact voice controls',
+    'The compact assistant presents a small set of controls while leaving most of the application visible. The user can manage the voice interaction without losing context.',
   ],
   [
     'frame 11.svg',
-    'Assistant greeting',
-    'The assistant introduces itself and provides a clear starting point for the user.',
+    'Expand the assistant',
+    'Expanded controls expose voice, chat, and close actions. This gives users a more direct way to change how they interact with the assistant.',
   ],
   [
     'frame 12.svg',
-    'Listening state',
-    'The listening state makes it clear that the assistant is actively waiting for the user to speak.',
+    'Manual mute control',
+    'The compact state shows a mute control, supporting the continuous-listening model with a clear way for users to pause microphone input.',
   ],
   [
     'frame 13.svg',
-    'No-input nudge',
-    'After around 30 seconds without input, the assistant gently nudges the user instead of leaving the state ambiguous.',
+    'Move into chat',
+    'The assistant can be used through text as well. The chat surface shows the conversation and provides an input for the user’s question.',
   ],
   [
     'frame 14.svg',
-    'Close or continue',
-    'Users can either close the assistant or continue talking, keeping control of the interaction.',
+    'Answer in context',
+    'The user asks, “Why is PAN required?” and the assistant responds with an explanation. This illustrates how a question can be handled within the application support experience.',
   ],
   [
     'frame 15.svg',
-    'Conversation experience',
-    'The final interaction focuses on keeping the assistant contextual while the user continues through the loan application.',
+    'End with a clear choice',
+    'Before the conversation closes, the assistant asks for confirmation and offers two clear actions: exit or keep talking.',
   ],
 ];
 
@@ -139,6 +103,7 @@ export default function AiAgentCaseStudy() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Floating CTA appears only after the hero is no longer visible.
         setShowFloatingCta(!entry.isIntersecting);
       },
       {
@@ -153,297 +118,380 @@ export default function AiAgentCaseStudy() {
 
   return (
     <CaseStudyShell>
-      {/* =========================================================
-          HERO
-      ========================================================= */}
-      <section
-        ref={heroRef}
-        className="relative w-full overflow-hidden pt-[120px] pb-[80px] max-[800px]:pt-[100px] max-[800px]:pb-[60px]"
-      >
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <div className="max-w-[850px]">
-            <Eyebrow>PRODUCT · AI EXPERIENCE</Eyebrow>
+      <main>
 
-            <h1 className="mt-5 max-w-[900px] text-[clamp(48px,7vw,92px)] font-medium leading-[0.95] tracking-[-0.055em] text-[#102F38]">
-              AI Agent Assistant
-            </h1>
-
-            <p className="mt-7 max-w-[680px] text-[clamp(17px,2vw,21px)] leading-[1.55] text-[#53656B]">
-              Designing a contextual voice assistant to guide users through
-              the loan application journey.
-            </p>
-
-            <div className="mt-8">
-              <Link
-                to="/ai-agent-prototype"
-                className="inline-flex items-center gap-2 rounded-full border border-[#102F38] bg-[#102F38] px-5 py-3 text-[12px] font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#0A2F3D]"
-              >
-                <span>View prototype</span>
-                <span className="text-[14px] leading-none">↗</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-16 w-full overflow-hidden rounded-[28px]">
-            <img
-              src="/case-study/ai-agent/assets/hero.svg"
-              alt="AI Agent Assistant"
-              className="block h-auto w-full"
-            />
-          </div>
+        {/* =========================================================
+            BACK TO WORK
+        ========================================================= */}
+        <div className="mx-auto w-[min(1100px,calc(100%-40px))] pt-24 sm:pt-28">
+          <Link
+            to="/#work"
+            className="text-[12px] font-semibold text-[#587078] transition-colors hover:text-[#0A2F3D]"
+          >
+            ← Back to selected work
+          </Link>
         </div>
-      </section>
 
-      {/* =========================================================
-          OVERVIEW
-      ========================================================= */}
-      <section className="w-full py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="01 / OVERVIEW"
-            title="Making help part of the application."
-          />
+        {/* =========================================================
+            HERO
+        ========================================================= */}
+        <section
+          ref={heroRef}
+          className="mx-auto w-[min(1120px,calc(100%-36px))] py-16 md:py-24"
+        >
+          <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
 
-          <div className="mt-12 grid grid-cols-[1.1fr_0.9fr] gap-16 max-[800px]:grid-cols-1 max-[800px]:gap-10">
-            <div className="max-w-[700px]">
-              <p className="text-[18px] leading-[1.7] text-[#53656B]">
-                The loan application journey had moments where users needed
-                guidance but verbal support did not always translate into
-                clear actions on the screen.
-              </p>
-
-              <p className="mt-6 text-[18px] leading-[1.7] text-[#53656B]">
-                The idea was to bring that guidance into the product itself —
-                through a lightweight AI-powered voice assistant that could
-                understand the user's context and help them move forward.
-              </p>
-            </div>
-
-            <Note>
-              <Hand>
-                The goal wasn't to replace the application.
-                <br />
-                It was to make the next step easier.
-              </Hand>
-            </Note>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          PROBLEM
-      ========================================================= */}
-      <section className="w-full bg-[#EEF3F2] py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="02 / THE PROBLEM"
-            title="Guidance existed, but it wasn't always connected to the action."
-          />
-
-          <div className="mt-12 grid grid-cols-[1.1fr_0.9fr] gap-16 max-[800px]:grid-cols-1 max-[800px]:gap-10">
+            {/* LEFT — HERO CONTENT */}
             <div>
-              <p className="text-[18px] leading-[1.7] text-[#53656B]">
-                Users could receive verbal help when they were stuck, but
-                they still had to figure out how that guidance mapped to the
-                interface in front of them.
+              <Eyebrow>Product design · Case study 02</Eyebrow>
+
+              <h1 className="mt-6 max-w-[650px] text-[clamp(50px,7vw,92px)] font-[650] leading-[.94] tracking-[-.075em] text-[#102F38]">
+                VoiceFirst
+                <br />
+                <span className="font-hand font-normal tracking-[-.04em] text-[#587078]">
+                  AI Agent
+                </span>
+              </h1>
+
+              <p className="mt-7 max-w-[560px] text-[16px] leading-[1.7] text-[#587078]">
+                Bringing guided, voice-led support into the loan application
+                journey—so users can move forward with greater clarity and
+                confidence.
               </p>
 
-              <p className="mt-6 text-[18px] leading-[1.7] text-[#53656B]">
-                This created a gap between understanding what to do and
-                actually completing the action.
-              </p>
+              {/* Project information */}
+              <div className="mt-10 flex max-w-[660px] flex-wrap gap-x-8 gap-y-5 border-t border-[rgba(16,47,56,0.14)] pt-5">
+                {[
+                  ['Role', 'Product Designer'],
+                  ['Focus', 'Voice interaction · UX'],
+                  ['Platform', 'Mobile web'],
+                  ['Project', 'InCred Finance'],
+                ].map((x) => (
+                  <div key={x[0]} className="text-[11px]">
+                    <strong className="mb-1 block font-mono text-[9px] uppercase tracking-[.12em] text-[#84918D]">
+                      {x[0]}
+                    </strong>
+                    {x[1]}
+                  </div>
+                ))}
+              </div>
+
+              {/* =====================================================
+                  HERO PROTOTYPE CTA
+              ===================================================== */}
+              <div className="mt-8">
+                <Link
+                  to="/ai-agent-prototype"
+                  className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-[#102F38]
+                    bg-[#102F38]
+                    px-5
+                    py-3
+                    text-[12px]
+                    font-semibold
+                    text-white
+                    transition-all
+                    duration-300
+                    hover:-translate-y-0.5
+                    hover:bg-[#0A2F3D]
+                  "
+                >
+                  <span>View prototype</span>
+                  <span className="text-[14px] leading-none">↗</span>
+                </Link>
+              </div>
             </div>
 
-            <Note>
-              <Hand>
-                Help shouldn't feel like
-                <br />
-                another step in the journey.
-              </Hand>
-            </Note>
+            {/* RIGHT — HERO IMAGE */}
+            <div className="flex items-center justify-center lg:justify-end lg:-mr-8">
+              <img
+                src="/case-study/ai-agent/assets/hero.svg"
+                alt="VoiceFirst AI Agent interface"
+                className="w-full max-w-[620px] rounded-[28px] object-contain"
+              />
+            </div>
+
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* =========================================================
-          QUESTIONS
-      ========================================================= */}
-      <section className="w-full py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="03 / QUESTIONS"
-            title="Questions I asked the product manager."
-          />
+        {/* =========================================================
+            OVERVIEW
+        ========================================================= */}
+        <section
+          id="overview"
+          className="border-t border-[rgba(16,47,56,.14)] py-16 md:py-20"
+        >
+          <div className="mx-auto w-[min(1120px,calc(100%-36px))]">
 
-          <div className="mt-14 grid grid-cols-2 gap-x-14 gap-y-12 max-[800px]:grid-cols-1 max-[800px]:gap-10">
-            {qs.map((item) => (
-              <div key={item.number} className="border-t border-[#102F38]/15 pt-5">
-                <div className="text-[11px] font-semibold tracking-[0.12em] text-[#7A898E]">
-                  {item.number}
-                </div>
+            <SectionHead
+              number="01 / Overview"
+              title="Support that stays with the user."
+            >
+              A voice assistant concept for helping customers through the loan
+              application without pulling them away from the task they came to
+              complete.
+            </SectionHead>
 
-                <h3 className="mt-3 text-[20px] font-medium tracking-[-0.02em] text-[#102F38]">
-                  {item.question}
+            <div className="grid gap-10 md:grid-cols-2">
+
+              <div>
+                <h3 className="text-[20px] font-[650] tracking-[-.03em] text-[#102F38]">
+                  Verbal guidance doesn't always translate into action.
                 </h3>
 
-                <p className="mt-3 text-[15px] leading-[1.65] text-[#53656B]">
-                  {item.answer}
+                <p className="mt-3 max-w-[620px] text-[14px] leading-[1.9] text-[#587078]">
+                  The challenge was not simply to add a voice feature. It was
+                  to make guidance understandable in the moment, while users
+                  remained focused on the form.
                 </p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* =========================================================
-          DIRECTION
-      ========================================================= */}
-      <section className="w-full bg-[#EEF3F2] py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="04 / DIRECTION"
-            title="A voice assistant that stays with the user."
-          />
+              <div className="grid gap-5">
 
-          <div className="mt-12 max-w-[760px]">
-            <p className="text-[18px] leading-[1.7] text-[#53656B]">
-              The direction was to make the assistant feel like a contextual
-              layer inside the loan application rather than a separate support
-              destination.
-            </p>
+                <div>
+                  <h3 className="text-[16px] font-[650] text-[#102F38]">
+                    What users faced
+                  </h3>
 
-            <p className="mt-6 text-[18px] leading-[1.7] text-[#53656B]">
-              The assistant sits on the right edge, can be expanded when help
-              is needed, and stays lightweight enough that the underlying
-              application remains visible.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          DESIGN DECISIONS
-      ========================================================= */}
-      <section className="w-full py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="05 / DESIGN DECISIONS"
-            title="Small decisions shaped the interaction."
-          />
-
-          <div className="mt-14 grid grid-cols-2 gap-x-14 gap-y-12 max-[800px]:grid-cols-1 max-[800px]:gap-10">
-            {decisions.map((item) => (
-              <div key={item.number} className="border-t border-[#102F38]/15 pt-5">
-                <div className="text-[11px] font-semibold tracking-[0.12em] text-[#7A898E]">
-                  {item.number}
-                </div>
-
-                <h3 className="mt-3 text-[20px] font-medium tracking-[-0.02em] text-[#102F38]">
-                  {item.title}
-                </h3>
-
-                <p className="mt-3 text-[15px] leading-[1.65] text-[#53656B]">
-                  {item.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          SCREENS
-      ========================================================= */}
-      <section className="w-full bg-[#EEF3F2] py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="06 / THE EXPERIENCE"
-            title="From discovery to conversation."
-          />
-
-          <div className="mt-16 space-y-24 max-[800px]:space-y-16">
-            {screens.map((screen, index) => (
-              <div
-                key={screen[0]}
-                className="grid grid-cols-[minmax(0,1fr)_320px] items-center gap-16 max-[800px]:grid-cols-1 max-[800px]:gap-8"
-              >
-                <div className="overflow-hidden rounded-[28px]">
-                  <img
-                    src={`/case-study/ai-agent/assets/${screen[0]}`}
-                    alt={screen[1]}
-                    className="block h-auto w-full"
-                  />
+                  <p className="mt-2 text-[13px] leading-[1.8] text-[#587078]">
+                    Users could hear support instructions but still struggle to
+                    connect those instructions to the right screen, field, or
+                    next step in the application.
+                  </p>
                 </div>
 
                 <div>
-                  <div className="text-[11px] font-semibold tracking-[0.12em] text-[#7A898E]">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
-                  <h3 className="mt-3 text-[24px] font-medium tracking-[-0.03em] text-[#102F38]">
-                    {screen[1]}
+                  <h3 className="text-[16px] font-[650] text-[#102F38]">
+                    What the experience needed
                   </h3>
 
-                  <p className="mt-4 text-[15px] leading-[1.7] text-[#53656B]">
-                    {screen[2]}
+                  <p className="mt-2 text-[13px] leading-[1.8] text-[#587078]">
+                    Keep help close to the task, make the assistant's state
+                    clear, and give users control over when to speak, mute,
+                    switch to chat, or end the conversation.
                   </p>
                 </div>
+
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* =========================================================
-          OUTCOME
-      ========================================================= */}
-      <section className="w-full py-[clamp(80px,10vw,140px)]">
-        <div className="mx-auto w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)]">
-          <SectionHead
-            eyebrow="07 / OUTCOME"
-            title="A more contextual way to ask for help."
-          />
+        {/* =========================================================
+            DISCOVERY
+        ========================================================= */}
+        <section
+          id="questions"
+          className="border-t border-[rgba(16,47,56,.14)] py-16 md:py-20"
+        >
+          <div className="mx-auto w-[min(1120px,calc(100%-36px))]">
 
-          <div className="mt-12 grid grid-cols-[1.1fr_0.9fr] gap-16 max-[800px]:grid-cols-1 max-[800px]:gap-10">
-            <div className="max-w-[720px]">
-              <p className="text-[18px] leading-[1.7] text-[#53656B]">
-                The concept explored how voice-based assistance could become
-                part of a financial application without taking users away from
-                the task they were trying to complete.
-              </p>
+            <SectionHead
+              number="02 / Discovery"
+              title="Questions before shaping the experience."
+            >
+              Product discussions help define the boundaries of an interaction
+              before committing to a UI. These are working questions based on
+              the documented design decisions; confirm exact historical wording
+              before presenting them as verbatim meeting notes.
+            </SectionHead>
 
-              <p className="mt-6 text-[18px] leading-[1.7] text-[#53656B]">
-                Starting with a focused rollout allowed the experience to be
-                tested before expanding into chat, regional languages and
-                broader support scenarios.
-              </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {qs.map((q, i) => (
+                <Note
+                  key={q[0]}
+                  number={q[0]}
+                  alt={i % 2 === 1}
+                  rotate={
+                    i % 3 === 1
+                      ? 'rotate-[1.2deg]'
+                      : i % 3 === 2
+                        ? 'rotate-[-.8deg]'
+                        : 'rotate-[-1.2deg]'
+                  }
+                >
+                  {q[1]}
+                </Note>
+              ))}
             </div>
 
-            <Note>
-              <Hand>
-                Start focused.
-                <br />
-                Learn from the interaction.
-                <br />
-                Expand from there.
-              </Hand>
-            </Note>
+            <p className="mt-6 text-[11px] text-[#687D84]">
+              Working discussion prompts based on the project context—not
+              verified verbatim meeting notes.
+            </p>
+
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* =========================================================
+            EXPERIENCE
+        ========================================================= */}
+        <section
+          id="experience"
+          className="border-t border-[rgba(16,47,56,.14)] py-16 md:py-20"
+        >
+          <div className="mx-auto w-[min(1120px,calc(100%-36px))]">
+
+            <SectionHead
+              number="03 / Experience"
+              title="Help without taking over the journey."
+            >
+              The interaction model focused on continuity, clear system
+              feedback, and giving users a choice in how they engage.
+            </SectionHead>
+
+            <div className="grid gap-x-12 md:grid-cols-2">
+              {decisions.map((d) => (
+                <div
+                  key={d[0]}
+                  className="grid grid-cols-[32px_1fr] gap-4 border-t border-[rgba(16,47,56,.14)] py-5"
+                >
+                  <div className="font-mono text-[10px] text-[#91A09B]">
+                    {d[0]}
+                  </div>
+
+                  <div>
+                    <h3 className="text-[15px] font-[650] tracking-[-.025em] text-[#102F38]">
+                      {d[1]}
+                    </h3>
+
+                    <p className="mt-2 text-[12px] leading-[1.8] text-[#587078]">
+                      {d[2]}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+
+        {/* =========================================================
+            SCREENS
+        ========================================================= */}
+        <section className="border-t border-[rgba(16,47,56,.14)] py-16 md:py-20">
+          <div className="mx-auto w-[min(1120px,calc(100%-36px))]">
+
+            <SectionHead
+              number="04 / Screens"
+              title="From first entry to conversation end."
+            >
+              The prototype screens below follow the provided SVG sequence.
+              Notes describe the visible interaction and the intent supported
+              by the project context.
+            </SectionHead>
+
+            <div className="space-y-16 md:space-y-24">
+
+              {screens.map((s, i) => (
+                <div
+                  key={s[0]}
+                  className="grid items-center gap-10 md:grid-cols-2 md:gap-16"
+                >
+
+                  <div
+                    className={`flex flex-col items-center ${
+                      i % 2 ? 'md:order-2' : ''
+                    }`}
+                  >
+                    <img
+                      src={`/case-study/ai-agent/assets/${s[0]}`}
+                      alt={s[1]}
+                      className="w-[min(300px,76%)] rounded-[28px] shadow-[0_18px_28px_rgba(16,47,56,.1)] transition-transform duration-300 hover:-translate-y-1"
+                    />
+                  </div>
+
+                  <div className={i % 2 ? 'md:order-1' : ''}>
+
+                    <Eyebrow>
+                      {String(i + 1).padStart(2, '0')} / SCREEN
+                    </Eyebrow>
+
+                    <h3 className="mt-4 max-w-[480px] text-[clamp(30px,4vw,42px)] font-[650] leading-[1.06] tracking-[-.05em] text-[#102F38]">
+                      {s[1]}
+                    </h3>
+
+                    <p className="mt-5 max-w-[500px] text-[14px] leading-[1.9] text-[#587078]">
+                      {s[2]}
+                    </p>
+
+                    <Hand className="mt-7 block">
+                      Keep the interaction clear ↗
+                    </Hand>
+
+                  </div>
+                </div>
+              ))}
+
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================
+            DESIGN SUMMARY
+        ========================================================= */}
+        <section className="border-t border-[rgba(16,47,56,.14)] py-16 md:py-20">
+          <div className="mx-auto w-[min(1120px,calc(100%-36px))]">
+
+            <div className="grid gap-8 rounded-md bg-[#EEF3F2] p-7 md:grid-cols-[1fr_.7fr] md:p-12">
+
+              <div>
+                <Eyebrow>05 / Design summary</Eyebrow>
+
+                <h2 className="mt-4 text-[clamp(30px,4vw,46px)] font-[650] leading-[1.05] tracking-[-.055em] text-[#102F38]">
+                  A guided layer within the application.
+                </h2>
+
+                <p className="mt-4 text-[13px] leading-[1.8] text-[#587078]">
+                  The prototype brings voice and chat support into the loan
+                  application experience, keeping the user in control of how
+                  they engage.
+                </p>
+              </div>
+
+              <div>
+
+                <Hand className="block rotate-[-3deg]">
+                  Designed to guide, not distract.
+                </Hand>
+
+                <p className="mt-3 text-[12px] leading-[1.8] text-[#587078]">
+                  The concept brings together a persistent assistant, visible
+                  voice controls, a text alternative, and a deliberate exit
+                  flow. It establishes an interaction direction for in-journey
+                  support while leaving room for future language and capability
+                  expansion.
+                </p>
+
+                <p className="mt-4 text-[11px] leading-[1.7] text-[#687D84]">
+                  This case study describes the design concept and prototype. No
+                  measured impact or post-launch results were provided.
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
 
       {/* =========================================================
           FLOATING PROTOTYPE CTA
           Appears only after the hero section leaves the viewport.
-          Higher on mobile so it stays above bottom navigation.
+          It does NOT appear in the navbar/hero area.
       ========================================================= */}
       <div
         className={`
           pointer-events-none
           fixed
-          bottom-[100px]
-          right-4
-          z-50
+          bottom-6
+          right-6
+          z-40
           transition-all
           duration-300
           sm:bottom-7
@@ -484,6 +532,7 @@ export default function AiAgentCaseStudy() {
           <span className="text-[14px] leading-none">↗</span>
         </Link>
       </div>
+
     </CaseStudyShell>
   );
 }

@@ -30,12 +30,48 @@ export default function Contact() {
             Whether it’s a product, an interface or an idea that needs shaping,
             I’m always interested in good problems.
           </p>
-          <a
-            href="mailto:hello@example.com"
-            className="inline-flex items-center justify-center mt-6 min-h-[42px] px-5 rounded-full bg-[#F5F7FA] text-[#0A2F3D] no-underline text-[14px] font-bold transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#62C1E5]"
-          >
-            Let’s Talk ↗
-          </a>
+          <div className="flex flex-wrap items-center gap-3 mt-6">
+  {/* Let's Talk */}
+  <a
+    href="https://cal.com/sachidanand-msmd0l/30min?overlayCalendar=true"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center min-h-[42px] px-5 rounded-full bg-[#F5F7FA] text-[#0A2F3D] no-underline text-[14px] font-bold transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#62C1E5]"
+  >
+    Let’s Talk ↗
+  </a>
+
+  {/* Email */}
+  <a
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=sachidanand0627@gmail.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-4 rounded-full border border-[rgba(245,247,250,0.22)] text-[#F5F7FA] no-underline text-[13px] font-medium transition-all duration-200 hover:-translate-y-0.5 hover:border-[#62C1E5] hover:text-[#62C1E5]"
+  >
+    <span className="text-[15px]">✉</span>
+    Email
+  </a>
+
+  {/* LinkedIn */}
+  <a
+    href="https://www.linkedin.com/in/sachidanand-0a5076376/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-4 rounded-full border border-[rgba(245,247,250,0.22)] text-[#F5F7FA] no-underline text-[13px] font-medium transition-all duration-200 hover:-translate-y-0.5 hover:border-[#62C1E5] hover:text-[#62C1E5]"
+  >
+    <span className="text-[14px] font-bold">in</span>
+    LinkedIn
+  </a>
+
+  {/* Phone */}
+  <a
+    href="tel:+91XXXXXXXXXX"
+    className="inline-flex items-center justify-center gap-2 min-h-[42px] px-4 rounded-full border border-[rgba(245,247,250,0.22)] text-[#F5F7FA] no-underline text-[13px] font-medium transition-all duration-200 hover:-translate-y-0.5 hover:border-[#62C1E5] hover:text-[#62C1E5]"
+  >
+    <span className="text-[14px]">☎</span>
+    Phone
+  </a>
+</div>
         </div>
 
         {/* Center Glowing Name Wordmark */}

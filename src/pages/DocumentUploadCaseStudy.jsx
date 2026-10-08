@@ -10,21 +10,21 @@ import CaseStudyShell, {
 const screens = [
   [
     '01',
-    'A focused upload entry point',
-    'Once PDF upload is selected, the screen keeps the upload action prominent and places file guidance close to it. The empty state avoids competing actions while the user is preparing to add a statement.',
-    'No surprises at the upload step.',
-    'File size and upload limits are visible before users choose a document—so the user knows the rules upfront.',
-    '02-empty-upload.svg',
-    'Keep the next action obvious ↗',
-  ],
-  [
-    '02',
     'Choose a verification method',
     'The flow presents OTP verification and PDF upload as two ways to verify a bank statement. Each option includes a short explanation so users can understand what the method involves before continuing.',
     'Make the choice before the first step.',
     'The selection screen sets expectations before the user enters the upload journey. The choice is clear before the work begins.',
-    '01-verification-method.svg',
+    '02-empty-upload.svg',
     'Start with a clear choice ↗',
+  ],
+  [
+    '02',
+    'A focused upload entry point',
+    'Once PDF upload is selected, the screen keeps the upload action prominent and places file guidance close to it. The empty state avoids competing actions while the user is preparing to add a statement.',
+    'No surprises at the upload step.',
+    'File size and upload limits are visible before users choose a document—so the user knows the rules upfront.',
+    '01-verification-method.svg',
+    'Keep the next action obvious ↗',
   ],
   [
     '03',
@@ -158,7 +158,7 @@ export default function DocumentUploadCaseStudy() {
             {/* Hero image */}
             <div className="flex items-center justify-center lg:justify-end">
               <img
-                src="/case-study/document-upload/assets/hero.svg"
+                src="/assets/document-upload.svg"
                 alt="Document upload flow"
                 className="
                   w-full

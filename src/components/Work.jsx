@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import GlowCard from './GlowCard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const projects = [
   {
@@ -33,21 +33,6 @@ const projects = [
     // Video played on hover
     video: "/assets/document-upload.webm",
   },
-  {
-    number: "03",
-    title: "Project name",
-    desc: "Short supporting information about the problem, product and design work.",
-    label: "Project three",
-    glowColor: "rgba(251, 191, 36, 0.95)",
-    prototypeUrl: "#prototype-3",
-    viewUrl: "#view-3",
-
-    // Static image shown before hover
-    media: "/assets/project-three.png",
-
-    // Video played on hover
-    video: "/assets/project-three.mp4",
-  },
 ];
 
 export default function Work() {
@@ -58,6 +43,8 @@ export default function Work() {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   const videoRefs = useRef({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -124,6 +111,10 @@ export default function Work() {
     }
   };
 
+  const handleCardClick = (project) => {
+    navigate(project.viewUrl);
+  };
+
   const textOpacity = isMobile
     ? 1
     : Math.max(0, 1 - scrollProgress * 3.5);
@@ -178,7 +169,7 @@ export default function Work() {
         className={
           isMobile
             ? 'w-full px-4'
-            : 'sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden'
+            : 'sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden pt-20'
         }
       >
         <div className="relative w-full max-w-[1100px] mx-auto flex flex-col justify-center items-center">
@@ -232,7 +223,7 @@ export default function Work() {
             }}
           >
             <div
-              className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 will-change-transform"
+              className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 will-change-transform"
               style={{
                 transform: isMobile
                   ? 'none'
@@ -260,12 +251,15 @@ export default function Work() {
                 return (
                   <div
                     key={idx}
-                    className="w-full min-w-0"
+                    className="w-full min-w-0 cursor-pointer"
                     onMouseEnter={() =>
                       handleMouseEnter(idx)
                     }
                     onMouseLeave={() =>
                       handleMouseLeave(idx)
+                    }
+                    onClick={() =>
+                      handleCardClick(project)
                     }
                   >
                     <GlowCard

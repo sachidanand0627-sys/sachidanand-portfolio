@@ -15,7 +15,7 @@ export default function Hero() {
       {/* Centered Text Content */}
       <div className="relative z-[10] my-auto flex flex-col items-center text-center max-w-[800px] w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)] mx-auto px-4">
 
-        <div className="text-[13px] tracking-[0.08em]  text-[rgba(10,47,61,0.68)] mb-[18px]">
+        <div className="text-[24px] tracking-[0.08em]  text-[rgba(10,47,61,0.68)] mb-[18px]">
           Hi
         </div>
 

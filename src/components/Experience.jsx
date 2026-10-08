@@ -7,7 +7,7 @@ const experiences = [
     role: 'Product Designer',
     company: 'InCred Finance',
     description:
-      'Designing digital experiences across lending, payments, document verification and AI-assisted customer journeys.',
+      'Worked across lending, loan applications, payments, mutual fund investments, document verification, AI-powered voice assistants, AI-driven design systems, enterprise platforms, and customer-facing web and mobile experiences.',
   },
   
 ];
@@ -138,7 +138,7 @@ export default function Experience() {
           <div
             className="
               absolute
-              left-[-1px]
+              left-[0px]
               top-0
               w-[3px]
               rounded-full
@@ -274,11 +274,6 @@ export default function Experience() {
         {/* Scroll progress indicator */}
         <div className="mt-[70px] ml-[26px] max-[800px]:ml-[8px]">
           <div className="flex items-center gap-3">
-            <span className="h-[5px] w-[5px] rounded-full bg-[#2CAEDF]" />
-
-            <span className="text-[10px] uppercase tracking-[0.14em] font-bold text-[#587078]">
-              {Math.round(progress * 100)}% journey
-            </span>
           </div>
         </div>
       </div>

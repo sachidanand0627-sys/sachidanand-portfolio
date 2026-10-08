@@ -8,10 +8,10 @@ export default function About() {
       data-cursor-theme="light"
       className="relative w-full overflow-hidden py-[clamp(88px,10vw,150px)] max-[800px]:py-[82px] bg-[#EEF3F2]"
     >
-      <div className="w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)] mx-auto grid grid-cols-[minmax(220px,0.8fr)_minmax(0,1.4fr)] max-[800px]:grid-cols-1 gap-[clamp(36px,7vw,100px)] items-center">
+      <div className="w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)] mx-auto grid grid-cols-[minmax(220px,0.8fr)_minmax(0,1.4fr)] max-[800px]:grid-cols-1 gap-[clamp(36px,7vw,100px)] items-start">
 
         {/* About Image */}
-        <div className="relative w-full flex items-center justify-center overflow-visible">
+        <div className="relative w-full flex items-start justify-center overflow-visible">
 
           {/* Image background stroke */}
           <div
@@ -70,25 +70,30 @@ export default function About() {
           </h2>
 
           <p className="mt-7 max-w-[650px] text-[17px] leading-[1.7] text-[#587078]">
-            Product designer focused on making digital experiences clearer,
-            more engaging and a little less obvious.
-          </p>
-
-          <p className="mt-5 max-w-[650px] text-[17px] leading-[1.7] text-[#587078]">
-            A mix of product thinking, UI/UX, visual design and experimentation
-            shapes the way each problem is approached — from the first
-            interaction to the smallest detail.
+            I’m a Product Designer who enjoys turning complex ideas into digital experiences that feel simple, useful, and a little unexpected. I work across product design, UI/UX, visual and graphic design, interaction design, AI experiences, design systems, motion, animation, and prototyping. From fintech products and AI assistants to web experiences, brand visuals, and creative interactions, I enjoy taking ideas from the first rough thought to the final polished detail - making sure they work well, look good, and feel memorable.
           </p>
 
           {/* Skills */}
           <div className="mt-8 flex flex-wrap gap-2.5">
             {[
-              'Product Design',
-              'UI/UX',
-              'Interaction Design',
-              'Visual Design',
-              'AI Experiences',
-              'Prototyping',
+              'Product Thinking',
+'UX Design',
+'UI Design',
+'User Flows',
+'Wireframing',
+'Information Architecture',
+'Design Systems',
+'Responsive Design',
+'Dashboard Design',
+'Design Tools',
+'Motion Design',
+'Graphic Design',
+'Branding',
+'Typography',
+'Visual Storytelling',
+'Video Editing',
+'HTML/CSS',
+'AI Tools',
             ].map((skill) => (
               <span
                 key={skill}

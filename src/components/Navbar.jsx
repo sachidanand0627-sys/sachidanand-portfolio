@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ElectricLogo from './ElectricLogo.jsx';
 import GooeyNav from './GooeyNav.jsx';
 
-const NAV_ITEMS = ['work', 'about'];
+const NAV_ITEMS = ['work', 'about', 'resume'];
 
 /* ---------- small inline icons (no extra dependency) ---------- */
 const iconProps = {
@@ -74,6 +74,9 @@ function Logo() {
 const CONTACT_CTA_CLASS =
   'rounded-full border border-[#0A2F3D]/20 bg-[#F5F7FA] px-4 py-2 text-[13px] font-semibold text-[#0A2F3D] transition-colors duration-200 hover:border-[#0A2F3D] hover:bg-[#0A2F3D] hover:text-[#F7F8F6]';
 
+const RESUME_URL =
+  'https://drive.google.com/file/d/1aDBu3DlocaiTUHwdeJ9Ad5oVO7f81WmO/view?usp=sharing';
+
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -81,9 +84,9 @@ export default function Navbar() {
 
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  // scrolled: page is not at the very top  -> navbar gets its pill background
-  // hidden:   user is scrolling down       -> desktop navbar slides away
-  // inHero:   home page, hero still in view -> mobile shows the top bar instead of the bottom pill
+  // scrolled: page is not at the very top -> navbar gets its pill background
+  // hidden: user is scrolling down -> desktop navbar slides away
+  // inHero: home page, hero still in view -> mobile shows the top bar instead of the bottom pill
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [inHero, setInHero] = useState(true);
@@ -102,29 +105,37 @@ export default function Navbar() {
     }
   }, [isHome]);
 
-  // Highlight state: a nav item is only highlighted after it was clicked, and it is
-  // cleared again as soon as the visitor scrolls out of that section.
+  // Highlight state: a nav item is only highlighted after it was clicked,
+  // and it is cleared again as soon as the visitor scrolls out of that section.
   const activeIdRef = useRef(null);
   const arrivedRef = useRef(false);
   const lockUntilRef = useRef(0);
 
   const setActiveSection = useCallback((id) => {
     const index = id ? NAV_ITEMS.indexOf(id) : -1;
+
     activeIdRef.current = index >= 0 ? id : null;
     arrivedRef.current = false;
-    // give the smooth scroll time to reach the section before we start checking
+
+    // Give the smooth scroll time to reach the section before we start checking.
     lockUntilRef.current = Date.now() + 1500;
+
     setActiveIndex(index);
   }, []);
 
-  // Arriving from another page (or a #work / #about link): highlight that item
+  // Arriving from another page (or a #work / #about link):
+  // highlight that item.
   useEffect(() => {
     if (!isHome) {
       setActiveSection(null);
       return;
     }
+
     const hashId = location.hash ? location.hash.slice(1) : null;
-    setActiveSection(NAV_ITEMS.includes(hashId) ? hashId : null);
+
+    setActiveSection(
+      NAV_ITEMS.includes(hashId) ? hashId : null
+    );
   }, [isHome, location.hash, location.key, setActiveSection]);
 
   useEffect(() => {
@@ -132,8 +143,11 @@ export default function Navbar() {
 
     const isInSection = (id) => {
       const section = document.getElementById(id);
+
       if (!section) return false;
+
       const rect = section.getBoundingClientRect();
+
       return rect.top <= marker() && rect.bottom > marker();
     };
 
@@ -143,39 +157,56 @@ export default function Navbar() {
 
       // --- show / hide + background (desktop) ---
       setScrolled(y > 8);
+
       if (y <= 8) {
-        setHidden(false); // at the top: always visible, background goes away
+        setHidden(false);
       } else if (delta > 6) {
-        setHidden(true); // scrolling down -> hide
+        setHidden(true);
       } else if (delta < -6) {
-        setHidden(false); // scrolling up -> show the pill
+        setHidden(false);
       }
+
       lastYRef.current = y;
 
-      // --- mobile: top bar while the hero is in view, bottom pill afterwards ---
+      // --- mobile: top bar while the hero is in view,
+      // bottom pill afterwards ---
       if (isHome) {
         const hero = document.getElementById('hero');
-        setInHero(hero ? hero.getBoundingClientRect().bottom > 80 : true);
+
+        setInHero(
+          hero ? hero.getBoundingClientRect().bottom > 80 : true
+        );
       } else {
         setInHero(false);
       }
 
       // --- click-only highlight for Work / About ---
       if (!isHome) return;
+
       const activeId = activeIdRef.current;
+
       if (!activeId) return;
 
       if (isInSection(activeId)) {
         arrivedRef.current = true;
-      } else if (arrivedRef.current || Date.now() > lockUntilRef.current) {
+      } else if (
+        arrivedRef.current ||
+        Date.now() > lockUntilRef.current
+      ) {
         setActiveSection(null);
       }
     };
 
     lastYRef.current = window.scrollY;
+
     setHidden(false);
+
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+
+    window.addEventListener('scroll', onScroll, {
+      passive: true,
+    });
+
     window.addEventListener('resize', onScroll);
 
     return () => {
@@ -184,34 +215,67 @@ export default function Navbar() {
     };
   }, [isHome, location.key, setActiveSection]);
 
-  // One navigation path for every link, on every page
+  // One navigation path for every section link, on every page.
   const goToSection = (sectionId) => {
     if (isHome) {
       const element = document.getElementById(sectionId);
+
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+
         return;
       }
     }
-    navigate({ pathname: '/', hash: `#${sectionId}` });
+
+    navigate({
+      pathname: '/',
+      hash: `#${sectionId}`,
+    });
   };
 
   const goHome = (event) => {
     event?.preventDefault();
+
     setActiveSection(null);
 
     if (isHome) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     } else {
-      // '#hero' makes the home page open on the hero, never on a previous scroll position
-      navigate({ pathname: '/', hash: '#hero' });
+      navigate({
+        pathname: '/',
+        hash: '#hero',
+      });
     }
   };
 
   const handleNavClick = (event, sectionId) => {
     event?.preventDefault?.();
-    setActiveSection(NAV_ITEMS.includes(sectionId) ? sectionId : null);
+
+    setActiveSection(
+      NAV_ITEMS.includes(sectionId)
+        ? sectionId
+        : null
+    );
+
     goToSection(sectionId);
+  };
+
+  // Resume is an external link, so it must not go through
+  // the internal section navigation logic.
+  const handleResumeClick = (event) => {
+    event?.preventDefault?.();
+
+    window.open(
+      RESUME_URL,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   const showMobileTop = isHome && inHero;
@@ -221,7 +285,9 @@ export default function Navbar() {
       {/* ===================== Desktop navbar ===================== */}
       <header
         className={`fixed left-0 right-0 top-0 z-[100] hidden px-6 py-3 transition-transform duration-300 ease-out md:block ${
-          hidden ? '-translate-y-full' : 'translate-y-0'
+          hidden
+            ? '-translate-y-full'
+            : 'translate-y-0'
         }`}
       >
         <div
@@ -241,34 +307,58 @@ export default function Navbar() {
             <div className="h-9 w-9 shrink-0">
               <Logo />
             </div>
+
             <span className="ml-2 whitespace-nowrap text-[15px] font-bold tracking-[-0.02em] text-[#0A2F3D]">
               SACHIDANAND
             </span>
           </a>
 
-          {/* Gooey Navigation */}
-          <GooeyNav
-            items={[
-              { label: '[ Work ]', href: '/#work' },
-              { label: '[ About ]', href: '/#about' },
-            ]}
-            particleCount={20}
-            particleDistances={[90, 10]}
-            particleR={400}
-            initialActiveIndex={-1}
-            activeIndexOverride={activeIndex}
-            onItemClick={(event, item) =>
-              handleNavClick(event, item.href.replace('/#', ''))
-            }
-            animationTime={600}
-            timeVariance={500}
-            colors={[1, 2, 3, 1, 3, 2, 1, 4]}
-            effectsEnabled={true}
-          />
+          {/* Navigation */}
+          <div className="flex items-center">
+            <GooeyNav
+              items={[
+                {
+                  label: '[ Work ]',
+                  href: '/#work',
+                },
+                {
+                  label: '[ About ]',
+                  href: '/#about',
+                },
+                {
+                  label: '[ Resume ]',
+                  href: RESUME_URL,
+                },
+              ]}
+              particleCount={20}
+              particleDistances={[90, 10]}
+              particleR={400}
+              initialActiveIndex={-1}
+              activeIndexOverride={activeIndex}
+              onItemClick={(event, item) => {
+                if (item.href === RESUME_URL) {
+                  handleResumeClick(event);
+                  return;
+                }
 
+                handleNavClick(
+                  event,
+                  item.href.replace('/#', '')
+                );
+              }}
+              animationTime={600}
+              timeVariance={500}
+              colors={[1, 2, 3, 1, 3, 2, 1, 4]}
+              effectsEnabled={true}
+            />
+          </div>
+
+          {/* Contact */}
           <button
             type="button"
-            onClick={() => handleNavClick(null, 'contact')}
+            onClick={() =>
+              handleNavClick(null, 'contact')
+            }
             className={`ml-3 ${CONTACT_CTA_CLASS}`}
           >
             Contact ↗
@@ -295,34 +385,44 @@ export default function Navbar() {
             <div className="h-9 w-9 shrink-0">
               <Logo />
             </div>
+
             <span className="ml-1.5 whitespace-nowrap text-[13px] font-bold tracking-[-0.02em] text-[#0A2F3D]">
               SACHIDANAND
             </span>
           </a>
 
           <div className="flex shrink-0 items-center gap-1.5">
+            {/* Work */}
             <button
               type="button"
-              onClick={() => handleNavClick(null, 'work')}
+              onClick={() =>
+                handleNavClick(null, 'work')
+              }
               aria-label="Work"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-[#0A2F3D]/15 bg-[#F5F7FA]/80 text-[#0A2F3D]"
             >
               <WorkIcon />
             </button>
 
+            {/* About */}
             <button
               type="button"
-              onClick={() => handleNavClick(null, 'about')}
+              onClick={() =>
+                handleNavClick(null, 'about')
+              }
               aria-label="About"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-[#0A2F3D]/15 bg-[#F5F7FA]/80 text-[#0A2F3D]"
             >
               <AboutIcon />
             </button>
 
+            {/* Contact */}
             <button
               type="button"
-              onClick={() => handleNavClick(null, 'contact')}
-              className={`${CONTACT_CTA_CLASS} !px-3 !py-2 !text-[12px] whitespace-nowrap`}
+              onClick={() =>
+                handleNavClick(null, 'contact')
+              }
+              className={`${CONTACT_CTA_CLASS} !whitespace-nowrap !px-3 !py-2 !text-[12px]`}
             >
               Contact ↗
             </button>
@@ -340,6 +440,7 @@ export default function Navbar() {
         aria-hidden={showMobileTop}
       >
         <nav className="flex items-center gap-1 rounded-full border border-white/20 bg-white/70 px-2 py-2 shadow-lg backdrop-blur-xl">
+          {/* Home */}
           <a
             href="/#hero"
             onClick={goHome}
@@ -349,27 +450,47 @@ export default function Navbar() {
             Home
           </a>
 
+          {/* Work */}
           <button
             type="button"
-            onClick={() => handleNavClick(null, 'work')}
+            onClick={() =>
+              handleNavClick(null, 'work')
+            }
             className="flex flex-col items-center gap-1 rounded-full border-0 bg-transparent px-4 py-1.5 text-[11px] font-semibold text-[#0A2F3D]"
           >
             <WorkIcon />
             Work
           </button>
 
+          {/* About */}
           <button
             type="button"
-            onClick={() => handleNavClick(null, 'about')}
+            onClick={() =>
+              handleNavClick(null, 'about')
+            }
             className="flex flex-col items-center gap-1 rounded-full border-0 bg-transparent px-4 py-1.5 text-[11px] font-semibold text-[#0A2F3D]"
           >
             <AboutIcon />
             About
           </button>
 
+          {/* Resume */}
+          <a
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center gap-1 rounded-full px-4 py-1.5 text-[11px] font-semibold text-[#0A2F3D] no-underline"
+          >
+            <span className="text-[18px] leading-[18px]">↗</span>
+            Resume
+          </a>
+
+          {/* Contact */}
           <button
             type="button"
-            onClick={() => handleNavClick(null, 'contact')}
+            onClick={() =>
+              handleNavClick(null, 'contact')
+            }
             className="flex flex-col items-center gap-1 rounded-full border-0 bg-transparent px-4 py-1.5 text-[11px] font-semibold text-[#0A2F3D]"
           >
             <ContactIcon />
