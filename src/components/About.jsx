@@ -44,17 +44,17 @@ export default function About() {
               relative
               z-10
               block
-              w-full
-              max-w-[620px]
-              h-auto
+              w-[150%]
+              h-[150%]
+              max-w-none
               object-contain
               object-center
 
               max-[800px]:w-[82%]
-              max-[800px]:max-w-[420px]
+              max-[800px]:h-[82%]
 
               max-[500px]:w-[72%]
-              max-[500px]:max-w-[340px]
+              max-[500px]:h-[72%]
             "
           />
         </div>
