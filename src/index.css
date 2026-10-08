@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #62C1E5;
+  --text: #0A2F3D;
+  --muted: rgba(10, 47, 61, 0.68);
+  --line: rgba(10, 47, 61, 0.14);
+  --grass: #24750c;
+  --grass-light: #6dab1b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #F7F8F6;
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Use overflow-x: clip so horizontal scroll is hidden without breaking position: sticky */
+body {
+  overflow-x: clip;
+}
+
+/* Navbar */
+.site-nav {
+  position: fixed;
+  left: 50%;
+  top: 24px;
+  transform: translate(-50%, 0);
+  width: min(1280px, calc(100% - 40px));
+  height: 48px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: rgba(247, 248, 246, 0.78);
+  border: 1px solid rgba(16, 47, 56, 0.08);
+  border-radius: 100px;
+  box-shadow: 0 8px 30px rgba(10, 47, 61, 0.06);
+  z-index: 1000;
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.site-nav.nav-over-hero {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.site-nav.nav-hidden {
+  transform: translate(-50%, -150%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 800px) {
+  .site-nav {
+    width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 700px) {
+  .site-nav {
+    top: 14px;
+    gap: 12px;
+    padding: 0; /* Removes all inner padding on mobile */
+  }
+}
+
+/* Cloud Layer */
+.cloud-layer {
+  position: absolute;
+  top: -150px;
+  left: 0;
+  right: 0;
+  bottom: 160px;
+  overflow: visible;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cloud {
+  animation: clouds linear infinite;
+  border-radius: 10px;
+  position: absolute;
+  margin-top: 33px;
+  width: 54px;
+  height: 5px;
+  background: #f7e7eb;
+  box-shadow: none;
+  opacity: 1;
+  will-change: left;
+}
+
+.cloud.tiny { transform: scale(0.5); }
+.cloud.small { transform: scale(1); }
+.cloud.normal { transform: scale(2); }
+.cloud.large { transform: scale(4); }
+
+.cloud div {
+  box-shadow: inset -2px -3px 0 0 #f7e7eb;
+  position: absolute;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  left: -3px;
+  bottom: 0;
+  background: #fafbf0;
+  z-index: 10;
+}
+.cloud div:nth-child(2) { transform: scale(1.6); margin: 0 0 4px 13px; z-index: 9; }
+.cloud div:nth-child(3) { transform: scale(2.4); margin: 0 0 9px 32px; z-index: 8; }
+.cloud div:nth-child(4) { transform: scale(1.3); margin: 0 0 2px 50px; z-index: 7; }
+
+@keyframes clouds {
+  0% { left: -100%; }
+  100% { left: 120%; }
+}
+
+.cloud-1  { animation-duration: 120s; margin-left: 0%;   top: 15%; }
+.cloud-2  { animation-duration: 120s; margin-left: 15%;  top: 50%; }
+.cloud-3  { animation-duration: 120s; margin-left: 35%;  top: 10%; }
+.cloud-4  { animation-duration: 120s; margin-left: 45%;  top: 65%; }
+.cloud-5  { animation-duration: 120s; margin-left: 60%;  top: 25%; }
+.cloud-6  { animation-duration: 120s; margin-left: 75%;  top: 55%; }
+.cloud-7  { animation-duration: 120s; margin-left: 85%;  top: 18%; }
+.cloud-8  { animation-duration: 120s; margin-left: 100%; top: 40%; }
+.cloud-9  { animation-duration: 120s; margin-left: 115%; top: 70%; }
+.cloud-10 { animation-duration: 120s; margin-left: 25%;  top: 35%; }
+.cloud-11 { animation-duration: 120s; margin-left: 55%;  top: 45%; }
+.cloud-12 { animation-duration: 120s; margin-left: 90%;  top: 5%;  }
+
+/* Grass */
+.grass {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#fieldCanvas {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+
+/* Player */
+.player {
+  position: absolute;
+  width: 78px;
+  height: 82px;
+  bottom: 27px;
+  left: 0;
+  z-index: 12;
+  will-change: left;
+}
+
+.player-art {
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/character.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+}
+
+.player-art::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 38px;
+  height: 8px;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.28);
+  filter: blur(7px);
+  border-radius: 50%;
+}
+
+.player-fallback {
+  position: absolute;
+  left: 21px;
+  bottom: 3px;
+  width: 36px;
+  height: 58px;
+  border-radius: 18px 18px 9px 9px;
+  background: #d8dce5;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  display: none;
+}
+
+.player-fallback::before {
+  content: "";
+  position: absolute;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  left: 2.5px;
+  top: -19px;
+  background: #e7e9ee;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+.gun {
+  position: absolute;
+  left: 42px;
+  top: 40px;
+  width: 48px;
+  height: 8px;
+  border-radius: 5px;
+  background: #e4e8ef;
+  transform-origin: 4px 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  z-index: 14;
+}
+
+.gun::after {
+  content: "";
+  position: absolute;
+  right: -7px;
+  top: 1px;
+  width: 9px;
+  height: 6px;
+  border-radius: 2px;
+  background: #9aa3b2;
+}
+
+.bullet {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  z-index: 11;
+  pointer-events: none;
+}
+
+/* Cursor bird — the bird itself replaces the default cursor on desktop. */
+@media (pointer: fine) {
+  html.bird-cursor-active,
+  html.bird-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+.bird-cursor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bird-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: 94% 47%;
+  will-change: transform, opacity;
+  opacity: 0;
+}
+
+@media (max-width: 700px), (pointer: coarse) {
+  .bird-cursor-layer {
+    display: none;
+  }
+}
+
+/* Birds */
+.bird {
+  position: absolute;
+  width: 110px;
+  height: 76px;
+  z-index: 10;
+  will-change: transform;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.bird-body,
+.bird-wing {
+  position: absolute;
+  width: 110px;
+  height: auto;
+  left: 0;
+  top: 0;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bird-wing {
+  width: 106.7px;
+  z-index: 1;
+  transform-origin: 42px 40px;
+  will-change: transform;
+}
+
+.bird-body {
+  z-index: 2;
+}
+
+.bird.flap .bird-wing {
+  animation: birdWingFlap 220ms ease-in-out infinite;
+}
+
+@keyframes birdWingFlap {
+  0% { transform: rotate(3deg) translateY(1px) scaleY(0.98); }
+  50% { transform: rotate(-4deg) translateY(-1px) scaleY(1.02); }
+  100% { transform: rotate(3deg) translateY(1px) scaleY(0.98); }
+}
+
+/* Mobile responsive scaling */
+@media (max-width: 700px) {
+  .player {
+    transform: scale(0.88);
+    transform-origin: bottom left;
+  }
+}
