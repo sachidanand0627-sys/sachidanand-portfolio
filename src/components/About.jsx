@@ -9,10 +9,10 @@ export default function About() {
       className="relative w-full overflow-hidden py-[clamp(88px,10vw,150px)] max-[800px]:py-[82px] bg-[#EEF3F2]"
     >
       <div className="w-[min(1100px,calc(100%-40px))] max-[800px]:w-[calc(100%-32px)] mx-auto grid grid-cols-[minmax(220px,0.8fr)_minmax(0,1.4fr)] max-[800px]:grid-cols-1 gap-[clamp(36px,7vw,100px)] items-center">
-        
+
         {/* About Image */}
-        <div className="relative w-full flex items-center justify-center">
-          
+        <div className="relative w-full flex items-center justify-center overflow-visible">
+
           {/* Image background stroke */}
           <div
             className="
@@ -24,6 +24,16 @@ export default function About() {
               rounded-[28px]
               border
               border-[#2CAEDF]
+
+              max-[800px]:bottom-[10%]
+              max-[800px]:left-[9%]
+              max-[800px]:w-[82%]
+              max-[800px]:h-[72%]
+
+              max-[500px]:bottom-[11%]
+              max-[500px]:left-[11%]
+              max-[500px]:w-[78%]
+              max-[500px]:h-[68%]
             "
           />
 
@@ -39,8 +49,12 @@ export default function About() {
               h-auto
               object-contain
               object-center
+
               max-[800px]:w-[82%]
               max-[800px]:max-w-[420px]
+
+              max-[500px]:w-[72%]
+              max-[500px]:max-w-[340px]
             "
           />
         </div>
