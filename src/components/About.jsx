@@ -225,7 +225,7 @@ export default function About() {
                 {
                   node: (
                     <img
-                      src="/assets/logos/vscode.svg"
+                      src="/assets/logos/vscode_copy.svg"
                       alt="VS Code"
                     />
                   ),
